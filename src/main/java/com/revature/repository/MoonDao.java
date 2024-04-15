@@ -121,7 +121,6 @@ public class MoonDao {
 	}
 
 	public List<Moon> getMoonsFromPlanet(int planetId) {
-		// TODO: implement
 
 		try(Connection connection = ConnectionUtil.createConnection()){
             List<Moon> moons = new ArrayList<>();

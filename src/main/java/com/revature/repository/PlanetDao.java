@@ -27,7 +27,7 @@ public class PlanetDao {
 				Planet planet = new Planet();
 				planet.setId(rs.getInt("id"));
 				planet.setName(rs.getString("name"));
-				planet.setOwnerId(rs.getInt("myPlanetId"));
+				planet.setOwnerId(rs.getInt("ownerId"));
 				planets.add(planet);
             }
 			return planets;
@@ -37,22 +37,24 @@ public class PlanetDao {
         }
 	}
 
-	public Planet getPlanetByName(String planetName) {
+	public List<Planet> getPlanetByName(String planetName) {
 		// TODO: implement
 		try(Connection connection = ConnectionUtil.createConnection()){
+			List<Planet> planets = new ArrayList<>();
 			String sql = "SELECT * FROM planets WHERE name = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			
 			ps.setString(1, planetName);
 			ResultSet rs = ps.executeQuery();
 
-			Planet planet = new Planet();
-			while(rs.next()){
+            while(rs.next()){
+				Planet planet = new Planet();
 				planet.setId(rs.getInt("id"));
 				planet.setName(rs.getString("name"));
-				planet.setOwnerId(rs.getInt("myPlanetId"));
-			}
-			return planet;
+				planet.setOwnerId(rs.getInt("ownerId"));
+				planets.add(planet);
+            }
+			return planets;
 		}catch(SQLException e){
 			e.printStackTrace();
 			return null;
@@ -71,7 +73,7 @@ public class PlanetDao {
 			while(rs.next()){
 				planet.setId(rs.getInt("id"));
 				planet.setName(rs.getString("name"));
-				planet.setOwnerId(rs.getInt("myPlanetId"));
+				planet.setOwnerId(rs.getInt("ownerId"));
 			}
 			return planet;
 		}catch(SQLException e){

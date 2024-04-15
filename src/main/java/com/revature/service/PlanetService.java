@@ -18,7 +18,7 @@ public class PlanetService {
 		return null;
 	}
 
-	public Planet getPlanetByName(int ownerId, String planetName) {
+	public List<Planet> getPlanetByName(int ownerId, String planetName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -36,5 +36,11 @@ public class PlanetService {
 	public boolean deletePlanetById(int planetId) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	public static void main(String[] args){
+		PlanetDao dao = new PlanetDao();
+		System.out.println(dao.getAllPlanets().toString());
+		System.out.println(dao.getPlanetById(3));
+		System.out.println(dao.getPlanetByName("test name"));
 	}
 }

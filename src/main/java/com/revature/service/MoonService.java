@@ -41,4 +41,9 @@ public class MoonService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public static void main(String[] args){
+		MoonDao dao = new MoonDao();
+		System.out.println(dao.getAllMoons().toString());
+	}
 }

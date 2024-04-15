@@ -52,8 +52,10 @@ public class UserController {
 		// TODO: implement
 	}
 	
-	public boolean checkAuthorization(int userId) {	
-		// TODO: implement
+	public boolean checkAuthorization(int userId, int ownderId) {	
+		if(userId == ownderId){
+			return true;
+		}
 		return false;
 	}
 }
