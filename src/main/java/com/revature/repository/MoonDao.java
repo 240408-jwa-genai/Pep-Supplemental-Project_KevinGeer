@@ -15,32 +15,136 @@ import com.revature.utilities.ConnectionUtil;
 public class MoonDao {
     
     public List<Moon> getAllMoons() {
-		// TODO: implement
-		return null;
+		try(Connection connection = ConnectionUtil.createConnection()) {
+			List<Moon> moons = new ArrayList<>();
+            //Write SQL logic here
+            String sql = "SELECT * FROM moons";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+				Moon moon = new Moon();
+				moon.setId(rs.getInt("id"));
+				moon.setName(rs.getString("name"));
+				moon.setMyPlanetId(rs.getInt("myPlanetId"));
+				moons.add(moon);
+            }
+			return moons;
+        }catch(SQLException e){
+            e.printStackTrace();
+			return null;
+        }
 	}
 
-	public Moon getMoonByName(String moonName) {
-		// TODO: implement
+	public Moon getMoonByName(int myPlanetId,String moonName) {
+		Moon moon = new Moon();
+		try(Connection connection = ConnectionUtil.createConnection()){
+            String sql = "SELECT * FROM moons WHERE name = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setString(1, moonName);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+				moon.setId(rs.getInt("id"));
+				moon.setName(rs.getString("name"));
+				moon.setMyPlanetId(rs.getInt("myPlanetId"));
+				return moon;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+			return null;
+        }
 		return null;
 	}
 
 	public Moon getMoonById(int moonId) {
-		// TODO: implement
-		return null;
+		Moon moon = new Moon();
+
+		try(Connection connection = ConnectionUtil.createConnection()){
+            String sql = "SELECT * FROM moons WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setInt(1, moonId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+				moon.setId(rs.getInt("id"));
+				moon.setName(rs.getString("name"));
+				moon.setMyPlanetId(rs.getInt("myPlanetId"));
+				return moon;
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+			return null;
+        }
+
+		return moon;
 	}
 
 	public Moon createMoon(Moon m) {
-		// TODO: implement
-		return null;
+		Moon createdMoon = new Moon();
+        try (Connection connection = ConnectionUtil.createConnection()){
+            String sql = "INSERT INTO moons (name, myPlanetId) VALUES (?, ?)";
+            //Tells database to return the generated ID
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, m.getName());
+            preparedStatement.setInt(2, m.getMyPlanetId());
+            
+            preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            while(rs.next()){
+                createdMoon.setName(m.getName());
+                createdMoon.setMyPlanetId(m.getMyPlanetId());
+                createdMoon.setId(rs.getInt(1));
+            }
+
+            return createdMoon;
+
+        }catch(SQLException e){
+            e.printStackTrace();
+			return null;
+        }
 	}
 
 	public boolean deleteMoonById(int moonId) {
 		// TODO: implement
-		return false;
+		try(Connection connection = ConnectionUtil.createConnection()){
+			String sql = "DELETE FROM moons WHERE id = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, moonId);
+			ps.executeUpdate();
+			return true;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public List<Moon> getMoonsFromPlanet(int planetId) {
 		// TODO: implement
+
+		try(Connection connection = ConnectionUtil.createConnection()){
+            List<Moon> moons = new ArrayList<>();
+            String sql = "SELECT * FROM moons WHERE myPlanetId = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+			preparedStatement.setInt(1, planetId);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            while(rs.next()){
+                // Moon moon = new Moon(rs.getInt("id"),
+                //         rs.getString("name"),
+                //         rs.getInt("myPlanetId"));
+				// moons.add(moon);
+				Moon moon = new Moon();
+				moon.setId(rs.getInt("id"));
+				moon.setName(rs.getString("name"));
+				moon.setMyPlanetId(rs.getInt("myPlanetId"));
+            }
+			return moons;
+        }catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
 		return null;
 	}
 }

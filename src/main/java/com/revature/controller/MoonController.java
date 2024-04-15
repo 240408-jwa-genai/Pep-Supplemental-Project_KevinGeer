@@ -3,6 +3,8 @@ package com.revature.controller;
 import com.revature.models.Moon;
 import com.revature.service.MoonService;
 
+import java.util.List;
+
 public class MoonController {
 	
 	private MoonService moonService;
@@ -13,6 +15,12 @@ public class MoonController {
 
 	public void getAllMoons(int currentUserId) {
 		// TODO: implement
+		List<Moon> allMoons = moonService.getAllMoons();
+		// allMoons.toString();
+		//If that doesn't work, try below.
+		for(Moon moon : allMoons){
+			System.out.print(moon.toString() + ", ");
+		}
 	}
 
 	public void getMoonByName(int currentUserId, String name) {

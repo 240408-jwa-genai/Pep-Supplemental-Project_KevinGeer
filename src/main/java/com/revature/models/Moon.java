@@ -6,6 +6,16 @@ public class Moon {
 	private String name; 
 	private int myPlanetId;
 	
+	public Moon(int id, String name, int myPlanetId){
+		this.id = id;
+		this.name = name;
+		this.myPlanetId = myPlanetId;
+	}
+
+	public Moon(){
+		
+	}
+
 	public int getId() {
 		return id;
 	}

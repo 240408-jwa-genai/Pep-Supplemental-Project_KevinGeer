@@ -15,12 +15,12 @@ public class MoonService {
 
 	public List<Moon> getAllMoons() {
 		// TODO implement
-		return null;
+		return dao.getAllMoons();
 	}
 
 	public Moon getMoonByName(int myPlanetId, String moonName) {
 		// TODO implement
-		return null;
+		return dao.getMoonByName(myPlanetId, moonName);
 	}
 
 	public Moon getMoonById(int myPlanetId, int moonId) {
