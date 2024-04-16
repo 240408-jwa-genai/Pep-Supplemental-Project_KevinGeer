@@ -39,8 +39,25 @@ public class PlanetService {
 	}
 	public static void main(String[] args){
 		PlanetDao dao = new PlanetDao();
-		System.out.println(dao.getAllPlanets().toString());
-		System.out.println(dao.getPlanetById(3));
-		System.out.println(dao.getPlanetByName("test name"));
+		//all planet related SQL works
+
+		// Planet testplanet = new Planet();
+		// testplanet.setId(1);
+		// testplanet.setName("testingonetwo");
+		// testplanet.setOwnerId(1);
+
+		//getting planets works
+		// System.out.println(dao.getAllPlanets().toString());
+		// System.out.println(dao.getPlanetById(3));
+		// System.out.println(dao.getPlanetByName("test name"));
+		
+		//creating planet works
+		// dao.createPlanet(testplanet);
+		
+		//delete works
+		// System.out.println(dao.getPlanetByName("testingonetwo"));
+		// if(dao.deletePlanetById(4) == true){
+		// 	System.out.println("true");
+		// }
 	}
 }

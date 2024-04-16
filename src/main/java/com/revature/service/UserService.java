@@ -28,7 +28,7 @@ public class UserService {
 
 	public User register(User registerRequestData) {
 		if(registerRequestData.getUsername().length() <= 30 && registerRequestData.getPassword().length() <= 30){
-			User possibleDuplicateUsername = dao.getUserByUsername(registerRequestData.getUsername()); // I'm thinking this returns a null if it doesn't exist, and that's the only time you can register
+			User possibleDuplicateUsername = dao.getUserByUsername(registerRequestData.getUsername()); 
 
 			if(possibleDuplicateUsername != null){
 				UsernamePasswordAuthentication validCredentials = new UsernamePasswordAuthentication();
@@ -46,18 +46,18 @@ public class UserService {
 		return dao.getUserById(id);
 	}
 
-	public static void main(String[] args){
-		UserDao dao = new UserDao();
-		// User returnedUser = dao.getUserByUsername("test user");
-		// System.out.println(returnedUser.getUsername());
+	// public static void main(String[] args){
+	// 	UserDao dao = new UserDao();
+	// 	User returnedUser = dao.getUserByUsername("test user");
+	// 	System.out.println(returnedUser.getUsername());
 		
-		// UserDao dao = new UserDao();
-		// UsernamePasswordAuthentication newCreds = new UsernamePasswordAuthentication();
-		// newCreds.setUsername("newuser");
-		// newCreds.setPassword("newpassword");
-		// User returnedUser = dao.createUser(newCreds);
-		// System.out.println(returnedUser.getUsername());
+	// 	UserDao dao = new UserDao();
+	// 	UsernamePasswordAuthentication newCreds = new UsernamePasswordAuthentication();
+	// 	newCreds.setUsername("newuser");
+	// 	newCreds.setPassword("newpassword");
+	// 	User returnedUser = dao.createUser(newCreds);
+	// 	System.out.println(returnedUser.getUsername());
 		
-		// System.out.println(dao.getUserById(3).getUsername());
-	}
+	// 	System.out.println(dao.getUserById(3).getUsername());
+	// }
 }

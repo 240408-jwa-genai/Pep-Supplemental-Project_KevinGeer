@@ -13,14 +13,14 @@ public class MoonService {
 		this.dao = dao;
 	}
 
-	public List<Moon> getAllMoons() {
+	public List<Moon> getAllMoons(int ownerId) {
 		// TODO implement
-		return dao.getAllMoons();
+		return dao.getAllMoons(ownerId);
 	}
 
-	public Moon getMoonByName(int myPlanetId, String moonName) {
+	public Moon getMoonByName(int userId, String moonName) {
 		// TODO implement
-		return dao.getMoonByName(myPlanetId, moonName);
+		return dao.getMoonByName(userId, moonName);
 	}
 
 	public Moon getMoonById(int myPlanetId, int moonId) {
@@ -44,6 +44,22 @@ public class MoonService {
 
 	public static void main(String[] args){
 		MoonDao dao = new MoonDao();
-		System.out.println(dao.getAllMoons().toString());
+		
+		//retrievals all work
+		System.out.println(dao.getAllMoons(1).toString());
+		System.out.println(dao.getMoonById(1, 5));
+		System.out.println(dao.getMoonByName(2, "gigachad"));
+		System.out.println(dao.getMoonsFromPlanet(3).toString());
+
+		System.out.println(dao.getMoonById(0, 0));
+		
+		//createmoon works
+		// Moon testMoon = new Moon();
+		// testMoon.setName("moonservicetest");
+		// testMoon.setMyPlanetId(2);
+		// System.out.println(dao.createMoon(testMoon));
+
+		//deleteMoon works
+		// System.out.println(dao.deleteMoonById(8));
 	}
 }

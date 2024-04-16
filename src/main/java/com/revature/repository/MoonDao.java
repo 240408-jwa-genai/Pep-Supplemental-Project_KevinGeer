@@ -14,12 +14,13 @@ import com.revature.utilities.ConnectionUtil;
 
 public class MoonDao {
     
-    public List<Moon> getAllMoons() {
+    public List<Moon> getAllMoons(int ownerId) {
 		try(Connection connection = ConnectionUtil.createConnection()) {
 			List<Moon> moons = new ArrayList<>();
             //Write SQL logic here
-            String sql = "SELECT * FROM moons";
+            String sql = "SELECT moons.id, moons.name, moons.myPlanetId FROM moons JOIN planets ON moons.myPlanetId = planets.id WHERE planets.ownerID = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, ownerId);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
 				Moon moon = new Moon();
@@ -35,36 +36,37 @@ public class MoonDao {
         }
 	}
 
-	public Moon getMoonByName(int myPlanetId,String moonName) {
+	public Moon getMoonByName(int ownerId, String moonName) {
 		Moon moon = new Moon();
 		try(Connection connection = ConnectionUtil.createConnection()){
-            String sql = "SELECT * FROM moons WHERE name = ?";
+            String sql = "SELECT moons.id, moons.name, moons.myPlanetId FROM moons JOIN planets ON moons.myPlanetId = planets.id WHERE moons.name = ? AND planets.ownerID = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.setString(1, moonName);
+			preparedStatement.setInt(2, ownerId);
 
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
 				moon.setId(rs.getInt("id"));
 				moon.setName(rs.getString("name"));
-				moon.setMyPlanetId(rs.getInt("myPlanetId"));
-				return moon;
+				moon.setMyPlanetId(rs.getInt("myPlanetId"));	
             }
+			return moon;
         }catch(SQLException e){
             e.printStackTrace();
 			return null;
         }
-		return null;
 	}
 
-	public Moon getMoonById(int moonId) {
+	public Moon getMoonById(int ownerId, int moonId) {
 		Moon moon = new Moon();
 
 		try(Connection connection = ConnectionUtil.createConnection()){
-            String sql = "SELECT * FROM moons WHERE id = ?";
+            String sql = "SELECT moons.id, moons.name, moons.myPlanetId FROM moons JOIN planets ON moons.myPlanetId = planets.id WHERE moons.id = ? AND planets.ownerID = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
 			preparedStatement.setInt(1, moonId);
+			preparedStatement.setInt(2, ownerId);
 
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
@@ -121,7 +123,6 @@ public class MoonDao {
 	}
 
 	public List<Moon> getMoonsFromPlanet(int planetId) {
-
 		try(Connection connection = ConnectionUtil.createConnection()){
             List<Moon> moons = new ArrayList<>();
             String sql = "SELECT * FROM moons WHERE myPlanetId = ?";
@@ -131,14 +132,11 @@ public class MoonDao {
 
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
-                // Moon moon = new Moon(rs.getInt("id"),
-                //         rs.getString("name"),
-                //         rs.getInt("myPlanetId"));
-				// moons.add(moon);
 				Moon moon = new Moon();
 				moon.setId(rs.getInt("id"));
 				moon.setName(rs.getString("name"));
 				moon.setMyPlanetId(rs.getInt("myPlanetId"));
+				moons.add(moon);
             }
 			return moons;
         }catch(SQLException e){
