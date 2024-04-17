@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.sqlite.SQLiteConfig;
+
 public class ConnectionUtil {
     
     public static Connection createConnection() throws SQLException{
-        return DriverManager.getConnection("jdbc:sqlite:Project1/Pep-Supplemental-Project_KevinGeer/src/main/resources/planetarium.db");
+        SQLiteConfig config = new SQLiteConfig();  
+        config.enforceForeignKeys(true); 
+        return DriverManager.getConnection("jdbc:sqlite:Project1/Pep-Supplemental-Project_KevinGeer/src/main/resources/planetarium.db", config.toProperties());
     }
 
     public static void main(String[] args) {

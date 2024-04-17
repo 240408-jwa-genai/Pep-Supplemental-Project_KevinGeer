@@ -8,20 +8,21 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.spi.DirStateFactory.Result;
+// import javax.naming.spi.DirStateFactory.Result;
 
 import com.revature.models.Planet;
 import com.revature.utilities.ConnectionUtil;
 
 public class PlanetDao {
     
-    public List<Planet> getAllPlanets() {
+    public List<Planet> getAllPlanets(int ownerId) {
 		// TODO: implement
 		try(Connection connection = ConnectionUtil.createConnection()) {
 			List<Planet> planets = new ArrayList<>();
             //Write SQL logic here
-            String sql = "SELECT * FROM planets";
+            String sql = "SELECT * FROM planets WHERE ownerId = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, ownerId);
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()){
 				Planet planet = new Planet();
@@ -37,36 +38,58 @@ public class PlanetDao {
         }
 	}
 
-	public List<Planet> getPlanetByName(String planetName) {
+	public Planet getPlanetByName(int currentUserId, String planetName) {
 		// TODO: implement
+		Planet planet = new Planet();
 		try(Connection connection = ConnectionUtil.createConnection()){
-			List<Planet> planets = new ArrayList<>();
+			String sql = "SELECT * FROM planets WHERE name = ? AND ownerId = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			
+			ps.setString(1, planetName);
+			ps.setInt(2, currentUserId);
+			ResultSet rs = ps.executeQuery();
+
+            while(rs.next()){
+				planet.setId(rs.getInt("id"));
+				planet.setName(rs.getString("name"));
+				planet.setOwnerId(rs.getInt("ownerId"));
+            }
+			return planet;
+		}catch(SQLException e){
+			e.printStackTrace();
+			return planet;
+		}			
+	}
+
+	public Planet getAnyPlanetByName(String planetName) {
+		try(Connection connection = ConnectionUtil.createConnection()){
 			String sql = "SELECT * FROM planets WHERE name = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			
 			ps.setString(1, planetName);
 			ResultSet rs = ps.executeQuery();
 
-            while(rs.next()){
-				Planet planet = new Planet();
+			Planet planet = new Planet();
+			while(rs.next()){
 				planet.setId(rs.getInt("id"));
 				planet.setName(rs.getString("name"));
 				planet.setOwnerId(rs.getInt("ownerId"));
-				planets.add(planet);
-            }
-			return planets;
+			}
+			return planet;
 		}catch(SQLException e){
 			e.printStackTrace();
 			return null;
-		}			
+		}	
 	}
 
-	public Planet getPlanetById(int planetId) {
+
+	public Planet getPlanetById(int currentUserId, int planetId) {
 		try(Connection connection = ConnectionUtil.createConnection()){
-			String sql = "SELECT * FROM planets WHERE id = ?";
+			String sql = "SELECT * FROM planets WHERE id = ? AND ownerId = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			
 			ps.setInt(1, planetId);
+			ps.setInt(2, currentUserId);
 			ResultSet rs = ps.executeQuery();
 
 			Planet planet = new Planet();

@@ -1,23 +1,23 @@
 package com.revature;
 
-import java.io.IOException;
-import java.sql.SQLException;
+// import java.io.IOException;
+// import java.sql.SQLException;
 import java.util.Scanner;
 
 import com.revature.controller.UserController;
-import com.revature.exceptions.UserFailException;
+// import com.revature.exceptions.UserFailException;
 import com.revature.models.User;
 import com.revature.models.UsernamePasswordAuthentication;
 import com.revature.repository.UserDao;
 import com.revature.service.UserService;
-import com.revature.utilities.ConnectionUtil;
+// import com.revature.utilities.ConnectionUtil;
 
 public class MainDriver {
     public static UserDao userDao = new UserDao();
     public static UserService userService = new UserService(userDao);
     public static UserController userController = new UserController(userService);
     public static User currentUser;
-    public static boolean loggedOn;
+    // public static boolean loggedOn;
     public static void main(String[] args) {
         // TODO: implement main method to initialize layers and run the application
 
@@ -62,6 +62,14 @@ public class MainDriver {
 
                     userController.authenticate(loginAttempt);
 
+                    // while(loggedOn){}
+                    
+                    // break out of while loop
+                    if(currentUser != null){
+                        userIsActive = false;
+                        break;
+                    }
+
                }else if(userChoice == 3){
                     System.out.println("Goodbye!");
                     userIsActive = false;
@@ -69,6 +77,19 @@ public class MainDriver {
                    System.out.println("Invalid option.\nYou need to choose 1, 2, or 3.");
                 }
             //even if it crashes here, since scanner is a resource, it'll autoclose.
+            }
+
+            while(currentUser != null){
+                //For creation operations, use currentUser.getId() to autopopulate the ownerId or myPlanetId (check they have access to that planet)
+                System.out.printf("\n%s, Press 1 to say a message. \nPress 2 to logout.\n", currentUser.getUsername());
+                int userChoice = Integer.parseInt(scanner.nextLine());
+                if(userChoice == 1){
+                    System.out.printf("Hello %s!\n", currentUser.getUsername());
+                }else if(userChoice == 2){
+                    userController.logout();
+                }else{
+                    System.out.println("Please press 1 or 2");
+                }
             }
         }
     }

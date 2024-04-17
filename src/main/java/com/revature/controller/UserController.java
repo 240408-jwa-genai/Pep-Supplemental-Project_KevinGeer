@@ -1,6 +1,6 @@
 package com.revature.controller;
 
-import com.revature.MainDriver;
+import static com.revature.MainDriver.currentUser;
 import com.revature.exceptions.UserFailException;
 import com.revature.models.User;
 import com.revature.models.UsernamePasswordAuthentication;
@@ -26,9 +26,9 @@ public class UserController {
 		// }
 		User possibleUser = userService.authenticate(loginRequestData);
 		if (possibleUser.getId() != 0){
-			MainDriver.currentUser = userService.getUserById(possibleUser.getId());
-			MainDriver.loggedOn = true;
-			System.out.println(String.format("Hello %s! Welcome to the Planetarium", possibleUser.getUsername()));
+			//currentUser static import from MainDriver
+			currentUser = userService.getUserById(possibleUser.getId()); 
+			System.out.println(String.format("Hello %s! Welcome to the Planetarium\n", possibleUser.getUsername()));
 		}else{
 			System.out.println("Username/Password invalid.");
 		}
@@ -49,7 +49,8 @@ public class UserController {
 	}
 
 	public void logout() {
-		// TODO: implement
+		System.out.printf("Goodbye, %s.", currentUser.getUsername());
+		currentUser = null;
 	}
 	
 	public boolean checkAuthorization(int userId, int ownderId) {	

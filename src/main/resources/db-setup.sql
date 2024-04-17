@@ -12,11 +12,11 @@ create table users(
 create table planets(
 	id INTEGER primary key,
 	name TEXT unique,
-	ownerId INTEGER references users(id)
+	ownerId INTEGER references users(id) ON DELETE CASCADE
 );
 
 create table moons(
 	id INTEGER primary key,
 	name TEXT unique,
-	myPlanetId INTEGER references planets(id)
+	myPlanetId INTEGER references planets(id) ON DELETE CASCADE
 );
