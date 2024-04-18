@@ -5,8 +5,8 @@ import com.revature.models.Moon;
 import com.revature.service.MoonService;
 // import com.revature.repository.MoonDao;  //Importing dao only for testing purposes.
 
-// import com.revature.models.Planet;
-// import com.revature.service.PlanetService;
+import com.revature.models.Planet;
+import com.revature.service.PlanetService;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public class MoonController {
 	
 	private MoonService moonService;
 
-	// private PlanetService planetService;
+	private PlanetService planetService;
 
 	public MoonController(MoonService moonService) {
 		this.moonService = moonService;
@@ -37,14 +37,22 @@ public class MoonController {
 		System.out.print(moon.toString());
 	}
 
-	public void createMoon(Moon moon) {
-		// TODO: Authenticate that the user has access to the planet they're creating the moon on first. I guess do it in the main driver.
-		Moon createdMoon = moonService.createMoon(moon);
-		if(createdMoon.getName() == null){
-			System.out.println("Moon creation failed.");
-		}else{
-			System.out.println("You have successfully created the following moon!");
-			System.out.print(createdMoon.toString());
+	public void createMoon(int currentUserId, Moon moon) {
+		// TODO this is throwing a null pointer exception
+		// Planet verifyAccess = planetService.getPlanetById(currentUserId, moon.getMyPlanetId());
+		if(planetService.getPlanetById(currentUserId, moon.getMyPlanetId()) == null){
+			System.out.println("Cannot create a moon on a planet you don't own.");
+		}
+		// if(verifyAccess.getOwnerId() != currentUserId){
+		// 	System.out.println("Cannot create a moon on a planet you don't own.");
+		else{
+			Moon createdMoon = moonService.createMoon(moon);
+			if(createdMoon.getName() == null){
+				System.out.println("Failed to create the moon.");
+			}else{
+				System.out.println("You have successfully created the following moon!");
+				System.out.print(createdMoon.toString());
+			}
 		}
 	}
 
