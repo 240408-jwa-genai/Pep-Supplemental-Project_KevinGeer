@@ -14,8 +14,8 @@ public class MoonService {
 		this.dao = dao;
 	}
 
-	public List<Moon> getAllMoons(int ownerId) {
-		return dao.getAllMoons(ownerId);
+	public List<Moon> getAllMoons(int userId) {
+		return dao.getAllMoons(userId);
 	}
 
 	public Moon getMoonByName(int userId, String moonName) {

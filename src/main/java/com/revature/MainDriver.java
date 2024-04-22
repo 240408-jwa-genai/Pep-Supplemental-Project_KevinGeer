@@ -218,7 +218,7 @@ public class MainDriver {
             int userMoonInput = Integer.parseInt(errorCheck);
             switch(userMoonInput){
                 case 1:
-                    // moonSearch();
+                    moonSearch();
                     break;
                 case 2:
                     System.out.println("Please input the name you'd like to give your new moon. Input 'Q' to return.\n");
@@ -230,9 +230,6 @@ public class MainDriver {
                         System.out.println("\nQuitting to previous menu due to entering 'Q'.");
                         break;
                     }else{
-                        // Need to authenticate this person can make a moon on this planet
-
-                        // TODO create moon throwing null pointer exception in all cases.
                         System.out.println("Please input the ID of the planet on which you want to place this moon.");
                         String planetIdErrorCheck = scanner.nextLine();
                         if(allDigits(planetIdErrorCheck) != true){
@@ -246,22 +243,55 @@ public class MainDriver {
                             break;
                         }
                     }             
-                // case 3:
-                //     System.out.println("Please input the ID of the planet you want to delete.  Input 'Q' to return.\n");
-                //     String inputCaseThree = scanner.nextLine();
-                //     if(!allDigits(inputCaseThree)){
-                //         System.out.println("\nQuitting to previous menu.");
-                //         break;
-                //     }else{
-                //         planetController.deletePlanet(currentUser.getId(), Integer.parseInt(inputCaseThree));
-                //         break;
-                //     }
+                case 3:
+                    System.out.println("Please input the ID of the moon you want to delete.  Input 'Q' to return.\n");
+                    String inputCaseThree = scanner.nextLine();
+                    if(!allDigits(inputCaseThree)){
+                        System.out.println("\nQuitting to previous menu.");
+                        break;
+                    }else{
+                        moonController.deleteMoon(currentUser.getId(), Integer.parseInt(inputCaseThree));
+                        break;
+                    }
                 default:
                     System.out.println("\nInvalid input. Returning to previous menu.");
                     break;
             }
         }
     }
+
+    private static void moonSearch(){
+        System.out.println("Press 1 to see all of your moons, 2 to search by name, and 3 to search by ID");
+        String userInput = scanner.nextLine();
+        int userMoonInput;
+        if(allDigits(userInput) == true){
+            userMoonInput = Integer.parseInt(userInput);
+            switch(userMoonInput){
+                case 1:
+                    moonController.getAllMoons(currentUser.getId());
+                    break;
+                case 2:
+                    System.out.println("To search by name, please insert the name:\n");
+                    moonController.getMoonByName(currentUser.getId(),scanner.nextLine());
+                    break;
+                case 3:
+                    System.out.println("To search by ID, please insert the ID:");
+                    String caseThreeInput = scanner.nextLine();
+                    if(allDigits(caseThreeInput) != true){
+                        System.out.println("You must enter an integer for the ID");
+                    }else{
+                        moonController.getMoonById(currentUser.getId(), Integer.parseInt(caseThreeInput));
+                    }
+                    break;
+                default:
+                    System.out.println("Invalid input, returning to previous menu.");
+                    break;
+            }
+        }else{
+            System.out.println("You must input a number.");
+        }        
+    }
+
 
     private static boolean allDigits(String n){
         boolean allDigits = true;
