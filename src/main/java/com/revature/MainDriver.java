@@ -49,7 +49,8 @@ public class MainDriver {
             }else{
             int userChoice = Integer.parseInt(errorCheck);
             if(userChoice == 1){
-                System.out.println("You chose to register an account.\nEnter desired username or enter 'Exit' to exit the program.");
+                System.out.println("You chose to register an account.\nBoth username and password must be less than 30 characters.\n"+ 
+                                    "The username must be unique.\nEnter desired username or enter 'Exit' to exit the program.");
                 String potentialUsername = scanner.nextLine();
                 if(potentialUsername.equalsIgnoreCase("Exit")){
                     System.out.println("You've chosen to exit.  Goodbye!");
@@ -64,7 +65,6 @@ public class MainDriver {
                 potentialUser.setUsername(potentialUsername);
                 potentialUser.setPassword(potentialPassword);
 
-                    
                 userController.register(potentialUser);
 
                }else if(userChoice == 2){

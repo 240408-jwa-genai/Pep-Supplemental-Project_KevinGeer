@@ -27,6 +27,11 @@ public class UserService {
 	}
 
 	public User register(User registerRequestData) {
+		String username = registerRequestData.getUsername();
+		if(username.equals(dao.getUserByUsername(username).getUsername())){
+			System.out.println("\n\nThis username is already taken.  Try again!");
+			return null;
+		}
 		if(registerRequestData.getUsername().length() <= 30 && registerRequestData.getPassword().length() <= 30){
 			User possibleDuplicateUsername = dao.getUserByUsername(registerRequestData.getUsername()); 
 
