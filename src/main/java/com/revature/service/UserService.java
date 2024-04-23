@@ -13,8 +13,6 @@ public class UserService {
 	}
 
 	public User authenticate(UsernamePasswordAuthentication loginRequestData) {
-
-		//This will fail if the username isn't found, so don't need to check if the username matches.
 		User compareUser = dao.getUserByUsername(loginRequestData.getUsername());
 		
 		if(compareUser != null){
@@ -51,7 +49,8 @@ public class UserService {
 		return dao.getUserById(id);
 	}
 
-	// public static void main(String[] args){
+	//  We do a little hand testing
+	//  public static void main(String[] args){
 	// 	UserDao dao = new UserDao();
 	// 	User returnedUser = dao.getUserByUsername("test user");
 	// 	System.out.println(returnedUser.getUsername());

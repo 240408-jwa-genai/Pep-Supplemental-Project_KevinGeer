@@ -39,8 +39,10 @@ public class PlanetService {
 	}
 
 	public Boolean deletePlanetById(int ownerId, int planetId) {
+		Planet planet = getPlanetById(ownerId, planetId);
 		if(dao.getPlanetById(ownerId, planetId).getName() != null){
 			if(dao.deletePlanetById(planetId)){
+				System.out.println(planet);
 				System.out.println("Deletion of planet successful.");
 				return true;
 			}else{
@@ -52,6 +54,8 @@ public class PlanetService {
 			return false;
 		}
 	}
+
+	
 	// public static void main(String[] args){
 	// 	PlanetDao dao = new PlanetDao();
 	// 	//all planet related SQL works

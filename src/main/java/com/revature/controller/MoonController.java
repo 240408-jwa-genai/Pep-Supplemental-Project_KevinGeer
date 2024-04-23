@@ -14,8 +14,6 @@ import java.util.List;
 public class MoonController {
 	
 	private MoonService moonService;
-
-	//probably better way to do this, but I needed to initialize the planetService
 	public static PlanetDao planetDao = new PlanetDao();
     public static PlanetService planetService = new PlanetService(planetDao);
 
@@ -29,8 +27,7 @@ public class MoonController {
 			System.out.println("You have no moons.");
 		}
 		for(Moon moon : allMoons){
-			System.out.print(moon.toString() + ", ");
-			
+			System.out.print(moon.toString() + ", ");	
 		}
 	}
 
@@ -82,8 +79,8 @@ public class MoonController {
 	public void getPlanetMoons(int currentUserId, int myPlanetId) {
 		// If currenUserId didn't create the planet you're getting these moons from, it'll return null
 		List<Moon> allMoons = moonService.getMoonsFromPlanet(currentUserId, myPlanetId);
-		if(allMoons == null){
-			System.out.println("No data.");
+		if(allMoons.size()==0){
+			System.out.println("No data. You might not have moons around this planet, the planet might not exist, or you don't have access to the planet.");
 		}else{
 			for(Moon moon : allMoons){
 				System.out.print(moon.toString() + ", ");

@@ -16,6 +16,9 @@ public class PlanetController {
 
 	public void getAllPlanets(int currentUserId) {
 		List<Planet> allPlanets = planetService.getAllPlanets(currentUserId);
+		if(allPlanets.size()==0){
+			System.out.println("You have no planets.");
+		}
 		for(Planet planet : allPlanets){
 			System.out.print(planet.toString() + ", ");
 		}
@@ -23,12 +26,20 @@ public class PlanetController {
 
 	public void getPlanetByName(int currentUserId, String name) {
 		Planet planet = planetService.getPlanetByName(currentUserId, name);
-		System.out.print(planet.toString());
+		if(planet.getName()==null){
+			System.out.println("You do not have authorization to access this planet, or it does not exist.");			
+		}else{
+			System.out.print(planet.toString());
+		}
 	}
 
 	public void getPlanetByID(int currentUserId, int id) {
 		Planet planet = planetService.getPlanetById(currentUserId, id);
-		System.out.print(planet.toString());
+		if(planet.getName()==null){
+			System.out.println("You do not have authorization to access this planet, or it does not exist.");			
+		}else{
+			System.out.print(planet.toString());
+		}
 	}
 
 	public void createPlanet(int currentUserId, String planetName) {

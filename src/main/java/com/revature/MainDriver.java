@@ -261,7 +261,7 @@ public class MainDriver {
     }
 
     private static void moonSearch(){
-        System.out.println("Press 1 to see all of your moons, 2 to search by name, and 3 to search by ID");
+        System.out.println("Press 1 to see all of your moons, 2 to search by name, 3 to search by ID, and 4 to see all moons of a specifc planet.");
         String userInput = scanner.nextLine();
         int userMoonInput;
         if(allDigits(userInput) == true){
@@ -281,6 +281,15 @@ public class MainDriver {
                         System.out.println("You must enter an integer for the ID");
                     }else{
                         moonController.getMoonById(currentUser.getId(), Integer.parseInt(caseThreeInput));
+                    }
+                    break;
+                case 4:            
+                    System.out.println("Input the ID of the planet for which you want to see the moons.");
+                    String caseFourInput = scanner.nextLine();
+                    if(!allDigits(caseFourInput)){
+                        System.out.println("You must enter an integer for the ID");
+                    }else{                        
+                        moonController.getPlanetMoons(currentUser.getId(), Integer.parseInt(caseFourInput));
                     }
                     break;
                 default:

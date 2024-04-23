@@ -16,14 +16,14 @@ import com.revature.utilities.ConnectionUtil;
 public class PlanetDao {
     
     public List<Planet> getAllPlanets(int ownerId) {
-		// TODO: implement
 		try(Connection connection = ConnectionUtil.createConnection()) {
 			List<Planet> planets = new ArrayList<>();
-            //Write SQL logic here
+
             String sql = "SELECT * FROM planets WHERE ownerId = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, ownerId);
             ResultSet rs = preparedStatement.executeQuery();
+
             while(rs.next()){
 				Planet planet = new Planet();
 				planet.setId(rs.getInt("id"));
@@ -39,7 +39,6 @@ public class PlanetDao {
 	}
 
 	public Planet getPlanetByName(int currentUserId, String planetName) {
-		// TODO: implement
 		Planet planet = new Planet();
 		try(Connection connection = ConnectionUtil.createConnection()){
 			String sql = "SELECT * FROM planets WHERE name = ? AND ownerId = ?";

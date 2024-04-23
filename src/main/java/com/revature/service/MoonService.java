@@ -33,14 +33,16 @@ public class MoonService {
 			moon.setName(null);
 			return moon;
 		}else{
-			// return dao.createMoon(moon);
-			System.out.println("Succeeding Creation");
 			return dao.createMoon(moon);
 		}
 		
 	}
 
 	public boolean deleteMoonById(int moonId) {
+		Moon moon = dao.getMoonByIdNoCheck(moonId);
+		if(dao.deleteMoonById(moonId) == true){
+			System.out.println(moon.toString());
+		}
 		return dao.deleteMoonById(moonId);
 	}
 
@@ -48,6 +50,9 @@ public class MoonService {
 		return dao.getMoonsFromPlanet(currentUserId, myPlanetId);
 	}
 
+
+
+	//	Testing hands again
 	// public static void main(String[] args){
 	// 	MoonDao dao = new MoonDao();
 		
