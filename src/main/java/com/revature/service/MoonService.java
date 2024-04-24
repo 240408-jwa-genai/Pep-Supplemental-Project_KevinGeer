@@ -27,7 +27,11 @@ public class MoonService {
 	}
 
 	public Moon createMoon(Moon moon) {
-
+		if(moon.getName().length()>30){
+			System.out.println("Name too long. Less than 30 required.");
+			moon.setName(null);
+			return moon;
+		}
 		if(dao.getAnyMoonByName(moon.getName()).getName() != null){   //&& dao.getAnyMoonByName(moon.getName()).getName().equals(moon.getName())
 			System.out.println("Cannot create a moon with a duplicate name.");
 			moon.setName(null);

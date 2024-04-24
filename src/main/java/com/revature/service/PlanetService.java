@@ -26,6 +26,10 @@ public class PlanetService {
 	}
 
 	public Planet createPlanet(int ownerId, String planetName) {
+		if(planetName.length()>30){
+			System.out.println("Name too long");
+			return null;
+		}
 		if(dao.getAnyPlanetByName(planetName).getName() != null){
 			System.out.println("Cannot create a planet with a duplicate name.");
 			return null;

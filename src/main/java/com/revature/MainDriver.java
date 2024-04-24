@@ -42,7 +42,7 @@ public class MainDriver {
 
         boolean anonymousUser = true;
         while(anonymousUser == true){
-            System.out.println("\nHello! Welcome to the Planetarium!\nEnter 1 to register an account, 2 to log in.\n\nEnter 3 to quit.");
+            System.out.println("\nHello! Welcome to the Planetarium!\n1 to register an account.\n2 to log in.\nEnter 3 to quit.");
             String errorCheck = scanner.nextLine();
             if(allDigits(errorCheck) != true){
                 System.out.println("You must input an integer.");
@@ -107,7 +107,7 @@ public class MainDriver {
             }else{
                 int loggedOnChoice = Integer.parseInt(errorCheck);
                 if(loggedOnChoice == 1){
-                    System.out.printf("\nPress 1 to manage your planets, 2 to manage your moons, and anything else to return to main menu.\n");
+                    System.out.printf("\n1 to manage your planets\n2 to manage your moons\nAnything else to return to main menu.\n");
                     String errorCheck2 = scanner.nextLine();
                     if(allDigits(errorCheck2) != true){
                         System.out.println("Input must be an integer"); 
@@ -136,7 +136,7 @@ public class MainDriver {
     }
 
     private static void nestedPlanets() {
-        System.out.println("\nPress 1 to search your planets, 2 to add a planet, and 3 to delete a planet.\n");
+        System.out.println("\n1 to search your planets\n2 to add a planet\n3 to delete a planet.\n");
         String errorCheck = scanner.nextLine();
         if(allDigits(errorCheck) != true){
             System.out.println("You must input an integer.");
@@ -178,7 +178,7 @@ public class MainDriver {
 
 
     private static void planetSearch(){
-        System.out.println("Press 1 to see all of your planets, 2 to search by name, and 3 to search by ID");
+        System.out.println("1 to see all of your planets\n2 to search by name\n3 to search by ID");
         String userInput = scanner.nextLine();
         int userPlanetInput;
         if(allDigits(userInput) == true){
@@ -210,7 +210,7 @@ public class MainDriver {
     }
 
     private static void nestedMoons() {
-        System.out.println("\nPress 1 to search your moons, 2 to add a moon, and 3 to delete a moon.\n");
+        System.out.println("\n1 to search your moons\n2 to add a moon\n3 to delete a moon.\n");
         String errorCheck = scanner.nextLine();
         if(allDigits(errorCheck) != true){
             System.out.println("You must enter an integer.");
@@ -261,7 +261,7 @@ public class MainDriver {
     }
 
     private static void moonSearch(){
-        System.out.println("Press 1 to see all of your moons, 2 to search by name, 3 to search by ID, and 4 to see all moons of a specifc planet.");
+        System.out.println("1 to see all of your moons\n2 to search by name\n3 to search by ID\n4 to see all moons of a specifc planet.");
         String userInput = scanner.nextLine();
         int userMoonInput;
         if(allDigits(userInput) == true){
