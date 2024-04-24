@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+// import javax.naming.spi.DirStateFactory.Result;
+
 import com.revature.models.User;
 import com.revature.models.UsernamePasswordAuthentication;
 import com.revature.utilities.ConnectionUtil;
@@ -81,5 +83,20 @@ public class UserDao {
             return null;
         }
         return user;
+    }
+
+    public boolean deleteAccount(int id){
+        try(Connection connection = ConnectionUtil.createConnection()){
+            String sql = "DELETE FROM users WHERE id = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            return true;
+        }catch(SQLException e){
+            System.out.println("Failed to delete account.");
+            e.printStackTrace();
+            return false;
+        }
     }
 }

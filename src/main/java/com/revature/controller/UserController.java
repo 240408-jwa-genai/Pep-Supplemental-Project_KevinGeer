@@ -4,10 +4,12 @@ import static com.revature.MainDriver.currentUser;
 import com.revature.exceptions.UserFailException;
 import com.revature.models.User;
 import com.revature.models.UsernamePasswordAuthentication;
+import com.revature.repository.UserDao;
 import com.revature.service.UserService;
 
 
 public class UserController {
+	private static UserDao userDao = new UserDao();
 	
 	private UserService userService;
 
@@ -47,5 +49,13 @@ public class UserController {
 			return true;
 		}
 		return false;
+	}
+
+	public void deleteAccount(int id){
+		if(userDao.deleteAccount(id)){
+			System.out.println("Your account has been deleted.");
+		}else{
+			System.out.println("Account deletion failed.");
+		}
 	}
 }

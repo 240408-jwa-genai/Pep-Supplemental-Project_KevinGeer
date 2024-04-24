@@ -100,7 +100,7 @@ public class MainDriver {
 
         while(currentUser != null){
             //For creation operations, use currentUser.getId() to autopopulate the ownerId or myPlanetId (check they have access to that planet)
-            System.out.printf("\n%s, Press 1 to manage your data. \nPress 2 to logout.\n\n", currentUser.getUsername());
+            System.out.printf("\n%s, Press 1 to manage your data. \nPress 2 to logout.\nPress 5 to delete your account.\n\n", currentUser.getUsername());
             String errorCheck = scanner.nextLine();
             if(allDigits(errorCheck) != true){
                 System.out.println("Input must be an integer");
@@ -127,6 +127,15 @@ public class MainDriver {
                     }                      
                 }else if(loggedOnChoice == 2){
                     userController.logout();
+                }else if(loggedOnChoice == 5){
+                    System.out.println("Are you sure you want to delete your account?  If so, you must type 'Authorize'.");
+                    String userStringInput = scanner.nextLine();
+                    if(userStringInput.equals("Authorize")){
+                        userController.deleteAccount(currentUser.getId());
+                        userController.logout();
+                    }else{
+                        System.out.println("Authorization failed, returning to menu.");
+                    }
                 }else{
                     System.out.println("Please press 1 or 2\n");
                 }
